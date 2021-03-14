@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import BaseScreen from "../BaseScreen";
 import { Form, Input, Button, Row, Col } from 'antd';
 import { toast } from 'react-toastify';
@@ -27,8 +27,6 @@ export default function AddBookScreen(props) {
 	const [form] = Form.useForm();
 
 	const { Title } = Typography;
-
-	const [title, setTitle] = useState("");
 	
 	useEffect( () => {
 			console.log(id);

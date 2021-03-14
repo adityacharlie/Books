@@ -1,10 +1,9 @@
 import { PureComponent } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import './Navbar.css';
-import { Button } from 'antd';
 import { Link } from 'react-router-dom'
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 class Navbar extends PureComponent {
 

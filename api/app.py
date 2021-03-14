@@ -11,7 +11,8 @@ app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://book:94kyvq1@postgres:5432/books"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://adityakotakonda:@localhost:5432/books"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://book:94kyvq1@postgres:5432/books"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -21,7 +22,6 @@ migrate = Migrate(app, db)
 @app.route('/books/')
 def book_list():
     all_books = Book.query.all()
-    print(all_books)
     result = books_schema.dump(all_books)
     return jsonify(result)
 
@@ -29,7 +29,6 @@ def book_list():
 @app.route('/books/', methods=['POST'])
 def create_book():
     json_data = request.get_json()
-    print(json_data)
     if not json_data:
         return {"message": "No input data provided"}, 400
 
@@ -48,7 +47,6 @@ def create_book():
                 # genre=genre,
                 quantity=quantity
                 )
-    print(book)
 
     db.session.add(book)
     db.session.commit()
@@ -58,7 +56,6 @@ def create_book():
 
 @app.route('/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
-    print(book_id)
     json_data = request.get_json()
     if not json_data:
         return {"message": "No input data provided"}, 400

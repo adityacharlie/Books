@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import BaseScreen from "./BaseScreen";
 import axios from "axios";
 import { toast } from 'react-toastify'

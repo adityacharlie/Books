@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=book
+      - POSTGRES_PASSWORD=94kyvq1
+      - POSTGRES_DB=books
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+volumes:
+  postgres_data:

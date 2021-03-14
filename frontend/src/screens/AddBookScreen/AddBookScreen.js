@@ -63,7 +63,7 @@ export default function AddBookScreen(props) {
 			axios
             .put('/books/'+ id, values)
             .then(response => {
-                toast('Book successfully Updated.')
+                toast('Book successfully Updated ' + response.status)
                 console.log('Edit book response', response)
                 history.push("/");
             })

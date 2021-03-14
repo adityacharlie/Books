@@ -68,7 +68,7 @@ export default function BookScreen(props) {
         render: (text, record) => (
           <Space size="middle">
             <a>Edit</a>
-            <a><Link to={`/deletebook/${record.id}`}>Delete</Link></a>
+            <Link to={`/deletebook/${record.id}`}>Delete</Link>
           </Space>
         ),
       },

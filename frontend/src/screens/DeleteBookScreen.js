@@ -22,7 +22,8 @@ export default function DeleteBookScreen(props) {
             })
             .catch(error => {
                 console.log('Delete book error', error.response)
-                toast('Error Deleting Book.Please try Again.')
+                toast('Error Deleting Book.Please try Again.' + error.response.statusText)
+                history.push("/");
             })
     }, []);
 

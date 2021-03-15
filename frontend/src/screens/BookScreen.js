@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import BaseScreen from "./BaseScreen";
-import { Table, Space } from "antd";
+import { Table } from "antd";
 import { Typography } from "antd";
 import { Row, Col } from "antd";
 import { Button } from "antd";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function BookScreen(props) {
   const [books, setBooks] = useState([]);
   const { Title } = Typography;
-
-  let history = useHistory();
 
   useEffect(() => {
     axios
@@ -22,12 +20,6 @@ export default function BookScreen(props) {
       })
       .finally(() => {});
   }, []);
-
-  function handleBookRedirect(id) {
-    console.log(id);
-
-    history.push("/editbook/" + id);
-  }
 
   const columns = [
     {
@@ -61,13 +53,15 @@ export default function BookScreen(props) {
       key: "quantity",
     },
     {
-      title: "Action",
+      title: "",
+      key: "edit",
+      render: (text, record) => <Link to={"/editbook/" + record.id}>Edit</Link>,
+    },
+    {
+      title: "",
       key: "action",
       render: (text, record) => (
-        <Space size="middle">
-          <a>Edit</a>
-          <Link to={`/deletebook/${record.id}`}>Delete</Link>
-        </Space>
+        <Link to={"/deletebook/" + record.id}>Delete</Link>
       ),
     },
   ];
@@ -87,18 +81,7 @@ export default function BookScreen(props) {
               </Link>
             </Col>
           </Row>
-          <Table
-            columns={columns}
-            dataSource={books}
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: (event) => {
-                  console.log(record, rowIndex);
-                  handleBookRedirect(record.id);
-                },
-              };
-            }}
-          />
+          <Table columns={columns} dataSource={books} bordered />
         </Col>
         <Col span={6}></Col>
       </Row>

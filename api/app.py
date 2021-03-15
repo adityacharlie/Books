@@ -1,29 +1,17 @@
-import flask
 from flask import request, jsonify
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow import ValidationError
-from sqlalchemy.exc import IntegrityError
-from datetime import datetime
-
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+from . import create_app
+from .models import db, Book
+from .schemas import book_schema, books_schema
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://adityakotakonda:@localhost:5432/books"
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://book:94kyvq1@postgres:5432/books"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+app = create_app()
 
 
 @app.route('/books/')
 def book_list():
     all_books = Book.query.all()
     result = books_schema.dump(all_books)
-    return jsonify(result)
+    return jsonify(result), 200
 
 
 @app.route('/books/', methods=['POST'])
@@ -39,19 +27,17 @@ def create_book():
     genre = request.json.get('genre', '')
     quantity = request.json.get('quantity', '')
 
-
     book = Book(title=title,
                 author=author,
-                # language=language,
+                language=language,
                 publisher=publisher,
-                # genre=genre,
+                genre=genre,
                 quantity=quantity
                 )
 
     db.session.add(book)
     db.session.commit()
-
-    return book_schema.dump(book)
+    return book_schema.dump(book), 201
 
 
 @app.route('/books/<int:book_id>', methods=['PUT'])
@@ -63,7 +49,7 @@ def update_book(book_id):
     book = Book.query.get(book_id)
 
     if not book:
-        return {"message": "Book could not be found."}, 400
+        return {"message": "Book could not be found."}, 404
 
     title = request.json.get('title', '')
     author = request.json.get('author', '')
@@ -81,7 +67,7 @@ def update_book(book_id):
 
     db.session.commit()
 
-    return book_schema.dump(book)
+    return jsonify({"successful": "Book successfully Updated "}), 200
 
 
 @app.route('/books/<int:book_id>', methods=["GET"])
@@ -89,10 +75,9 @@ def book_detail(book_id):
     book = Book.query.get(book_id)
 
     if not book:
-        return jsonify({"message": "Book could not be found."}), 400
+        return jsonify({"message": "Book could not be found."}), 404
 
-    book_schema = BookSchema()
-    return book_schema.dump(book)
+    return book_schema.dump(book), 200
 
 
 @app.route('/books/<int:book_id>', methods=["DELETE"])
@@ -106,37 +91,3 @@ def delete_book(book_id):
 
     res = jsonify({"error": "Book not found"}), 404
     return res
-
-
-class Book(db.Model):
-    __tablename__ = 'books'
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(500), index=True)
-    author = db.Column(db.String(100), index=True)
-    language = db.Column(db.String(100))
-    publisher = db.Column(db.String(100), index=True)
-    genre = db.Column(db.String(100))
-    quantity = db.Column(db.Integer)
-    created = db.Column(db.Date, default=datetime.today())
-
-    def __init__(self, title, author, publisher, quantity):
-        self.title = title
-        self.author = author
-        self.publisher = publisher
-        self.quantity = quantity
-
-
-class BookSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Book
-        include_relationships = True
-        load_instance = True
-
-
-book_schema = BookSchema()
-books_schema = BookSchema(many=True)
-
-
-if __name__ == '__main__':
-    app.run()

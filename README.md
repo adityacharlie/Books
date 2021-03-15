@@ -6,10 +6,19 @@ pip install -r requirements.txt
 
 Go to the api/ folder and run
 
-flask db init
+export FLASK_APP=app.py
 
-flask db migrate
+These variables that need to get passed as environment variables to the Flask app
+to use the local postgres database or postgres docker instance
 
-flask db upgrade
 
-python app.py
+export POSTGRES_USER=test
+export POSTGRES_PASSWORD=password
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5432
+export POSTGRES_DB=example
+
+
+flask run
+
+

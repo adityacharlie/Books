@@ -1,14 +1,16 @@
 # Books
 
-Please run 
+Clone the repository to your preferred location.
+
+Create virtualenv and install all the packages in requirements.txt
 
 pip install -r requirements.txt
 
-Go to the api/ folder and run
+Go to the api/ on your terminal and run
 
 export FLASK_APP=app.py
 
-These variables that need to get passed as environment variables to the Flask app
+These variables need to get passed as environment variables to the Flask app
 to use the local postgres database or postgres docker instance
 
 ```text

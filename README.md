@@ -12,11 +12,11 @@ These variables that need to get passed as environment variables to the Flask ap
 to use the local postgres database or postgres docker instance
 
 ```text
-export POSTGRES_USER=test
+export POSTGRES_USER=testuser
 export POSTGRES_PASSWORD=password
-export POSTGRES_HOST=localhost
+export POSTGRES_HOST=postgres
 export POSTGRES_PORT=5432
-export POSTGRES_DB=example
+export POSTGRES_DB=books
 ```
 *replace these to your database connection variables
 

@@ -18,6 +18,7 @@ export POSTGRES_HOST=localhost
 export POSTGRES_PORT=5432
 export POSTGRES_DB=example
 ```
+*replace these to your database connection variables
 
 flask run
 

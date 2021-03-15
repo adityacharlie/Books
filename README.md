@@ -20,6 +20,8 @@ export POSTGRES_DB=example
 ```
 *replace these to your database connection variables
 
+Ensure the same values are set in database.conf used to create the postgres docker instance
+
 flask run
 
 

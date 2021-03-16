@@ -44,7 +44,7 @@ export default function AddEditBookScreen(props) {
         .finally(() => {});
     } else {
     }
-  }, []);
+  });
 
   const onFinish = (values: any) => {
     console.log(id);

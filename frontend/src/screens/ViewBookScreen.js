@@ -31,7 +31,7 @@ export default function ViewBookScreen(props) {
         );
         history.push("/");
       });
-  }, []);
+  });
 
   return (
     <BaseScreen>

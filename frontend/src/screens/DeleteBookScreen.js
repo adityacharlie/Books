@@ -26,7 +26,7 @@ export default function DeleteBookScreen(props) {
         );
         history.push("/");
       });
-  }, []);
+  });
 
   return <BaseScreen></BaseScreen>;
 }
